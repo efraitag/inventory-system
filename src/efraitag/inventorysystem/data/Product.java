@@ -1,7 +1,12 @@
 package efraitag.inventorysystem.data;
 
 import javafx.collections.ObservableList;
-
+import javafx.collections.*;
+import java.util.ArrayList;
+/**
+ * 
+ * @author Eden
+ */
 public class Product {
     private ObservableList<Part> associatedParts;
     private int id;
@@ -12,75 +17,139 @@ public class Product {
     private int max;
 
     public Product(int id, String name, double price, int stock, int min, int max){
-        //TODO
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.min = min;
+        this.max = max;
+        
+        associatedParts = FXCollections.observableArrayList(new ArrayList<Part>());
     }
-
+    
+    /**
+     * 
+     * @param id the id to set
+     */
     public void setId(int id){
-        //TODO
+        this.id = id;
     }
-
-    public void setName(String Name){
-        //TODO
+    
+    /**
+     * 
+     * @param name the name to set
+     */
+    public void setName(String name){
+        this.name = name;
     }
-
+    /**
+     * 
+     * @param price the price to set
+     */
     public void setPrice(double price){
-        //TODO
+        this.price = price;
     }
-
+    
+    /**
+     * 
+     * @param stock the stock to set
+     */
     public void setStock(int stock){
-        //TODO
+        this.stock = stock;
     }
 
+    /**
+     * 
+     * @param min the min to set
+     */
     public void setMin(int min){
-        //TODO
+        this.min = min;
     }
-
+    
+    /**
+     * 
+     * @param max the max to set
+     */
     public void setMax(int max){
-        //TODO
+        this.max = max;
     }
 
+    /**
+     * 
+     * @return the id
+     */
     public int getId(){
-        //TODO
-        return -1;
+        return id;
     }
-
+    
+    /**
+     * 
+     * @return the name
+     */
     public String getName(){
-        //TODO
-        return "";
+        return name;
     }
-
+    
+    /**
+     * 
+     * @return the price
+     */
     public double getPrice(){
-        //TODO
-        return -1;
+        return price;
     }
-
+    
+    /**
+     * 
+     * @return the stock
+     */
     public int getStock(){
-        //TODO
-        return -1;
+        return stock;
     }
-
+    
+    /**
+     * 
+     * @return the min
+     */
     public int getMin(){
-        //TODO
-        return -1;
+        return min;
     }
-
+    
+    /**
+     * 
+     * @return the max
+     */
     public int getMax(){
-        //TODO
-        return -1;
+        return max;
     }
-
+    
+    /**
+     * 
+     * @param part the part to associate
+     */
     public void addAssociatedPart(Part part){
-        //TODO
+        associatedParts.add(part);
     }
-
+    
+    /**
+     * 
+     * @param selectedAssociatedPart the part to disassociate
+     * @return true if it was in the list and deleted, false otherwise
+     */
     public boolean deleteAssociatedPart(Part selectedAssociatedPart){
-        //TODO
+        for(Part associatedPart : associatedParts){
+            if(associatedPart == selectedAssociatedPart){
+                associatedParts.remove(associatedPart);
+                return true;
+            }
+        }
         return false;
     }
-
+    
+    /**
+     * 
+     * @return copy of associatedParts
+     */
     public ObservableList<Part> getAllAssociatedParts(){
-        //TODO
-        return null;
+        return FXCollections.observableArrayList(new ArrayList<Part>(associatedParts));
     }
-
 }
