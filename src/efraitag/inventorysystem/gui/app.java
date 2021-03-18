@@ -31,5 +31,4 @@ public class app extends Application{
         stage.setScene(rootScene);
         stage.show();
     }
-    
 }
