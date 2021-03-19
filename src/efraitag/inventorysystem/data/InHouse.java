@@ -6,17 +6,23 @@ public class InHouse extends Part{
 
     public InHouse(int id, String name, double price, int stock, int min, int max, int machineId){
         super(id, name, price, stock, min, max);
-        //TODO
+        this.machineId = machineId;
     }
-
+    
+    /**
+     * 
+     * @param machineId Id to set machineId to
+     */
     public void setMachineId(int machineId){
-        //TODO
-        return;
+        this.machineId = machineId;
     }
-
+    
+    /**
+     * 
+     * @return the machineId
+     */
     public int getMachineId(){
-        //TODO
-        return -1;
+        return machineId;
     }
 
 }
