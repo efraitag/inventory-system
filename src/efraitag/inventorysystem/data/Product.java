@@ -136,13 +136,7 @@ public class Product {
      * @return true if it was in the list and deleted, false otherwise
      */
     public boolean deleteAssociatedPart(Part selectedAssociatedPart){
-        for(Part associatedPart : associatedParts){
-            if(associatedPart == selectedAssociatedPart){
-                associatedParts.remove(associatedPart);
-                return true;
-            }
-        }
-        return false;
+        return associatedParts.remove(selectedAssociatedPart);
     }
     
     /**
