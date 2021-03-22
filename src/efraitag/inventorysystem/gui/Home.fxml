@@ -73,7 +73,7 @@
                               <Insets bottom="-10.0" />
                            </padding>
                         </HBox>
-                        <TableView prefHeight="250.0" prefWidth="450.0">
+                        <TableView fx:id="partTable" prefHeight="250.0" prefWidth="450.0">
                           <columns>
                             <TableColumn editable="false" prefWidth="56.0" sortable="false" text="Part ID" />
                             <TableColumn editable="false" prefWidth="113.0" text="Part Name" />
@@ -83,13 +83,13 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                            <children>
-                              <Button fx:id="add_part" mnemonicParsing="false" text="Add" onAction="#openAddPart">
+                              <Button fx:id="addPart" mnemonicParsing="false" text="Add" onAction="#openAddPart">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="modify_part" mnemonicParsing="false" text="Modify" onAction="#openModifyPart"/>
-                              <Button fx:id="delete_part" mnemonicParsing="false" text="Delete" onAction="#deletePart"/>
+                              <Button fx:id="modifyPart" mnemonicParsing="false" text="Modify" onAction="#openModifyPart"/>
+                              <Button fx:id="deletePart" mnemonicParsing="false" text="Delete" onAction="#deletePart"/>
                            </children>
                         </HBox>
                      </children>
@@ -112,7 +112,7 @@
                               <Insets bottom="-10.0" />
                            </padding>
                         </HBox>
-                        <TableView prefHeight="250.0" prefWidth="325.0">
+                        <TableView fx:id="productTable" prefHeight="250.0" prefWidth="325.0">
                            <columns>
                               <TableColumn prefWidth="76.0" text="Product ID" />
                               <TableColumn prefWidth="100.0" text="Part Name" />
@@ -122,13 +122,13 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                            <children>
-                              <Button fx:id="add_product" mnemonicParsing="false" text="Add" onAction="#openAddProduct">
+                              <Button fx:id="addProduct" mnemonicParsing="false" text="Add" onAction="#openAddProduct">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="modify_product" mnemonicParsing="false" text="Modify" onAction="#openModifyProduct"/>
-                              <Button fx:id="delete_product" mnemonicParsing="false" text="Delete" onAction="#deleteProduct"/>
+                              <Button fx:id="modifyProduct" mnemonicParsing="false" text="Modify" onAction="#openModifyProduct"/>
+                              <Button fx:id="deleteProduct" mnemonicParsing="false" text="Delete" onAction="#deleteProduct"/>
                            </children>
                         </HBox>
                      </children>

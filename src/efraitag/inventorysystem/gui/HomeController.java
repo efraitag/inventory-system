@@ -5,9 +5,11 @@
  */
 package efraitag.inventorysystem.gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import efraitag.inventorysystem.data.Part;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 
 /**
  * FXML Controller class
@@ -16,7 +18,22 @@ import javafx.fxml.Initializable;
  */
 public class HomeController {
     
+    @FXML
+    private TableView partTable;
+    @FXML
+    private TableView productTable;
+    private TableViewSelectionModel partTableSelectionModel;
+    private TableViewSelectionModel productTableSelectionModel;
+    
     public void HomeController() {
+        //pass
+    }
+    
+    @FXML
+    public void initialize(){
+        partTableSelectionModel = partTable.getSelectionModel();
+        productTableSelectionModel = productTable.getSelectionModel();
+        //TODO: Populate tables with data from file
     }
     
     /**
@@ -43,7 +60,15 @@ public class HomeController {
      * 
      */
     public void deletePart(){
-        //TODO
+        ObservableList<Integer> selectedPart = partTableSelectionModel.getSelectedIndices();
+        
+        if(selectedPart == null){
+            //TODO Error pop-up
+            return;
+        }
+        else{
+            partTable.getItems().remove(selectedPart.get(0));
+        }
     }
     
     /**
@@ -68,13 +93,21 @@ public class HomeController {
      * 
      */
     public void deleteProduct(){
-        //TODO
+        ObservableList<Integer> selectedProduct = productTableSelectionModel.getSelectedIndices();
+        
+        if(selectedProduct == null){
+            //TODO Error pop-up
+            return;
+        }
+        else{
+            productTable.getItems().remove(selectedProduct.get(0));
+        }
     }
     
     /**
      * 
      */
     public void exitApplication(){
-        //TODO
+        System.exit(0);
     }
 }

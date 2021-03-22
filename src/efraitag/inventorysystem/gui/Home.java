@@ -6,10 +6,13 @@
 package efraitag.inventorysystem.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -34,6 +37,14 @@ public class Home extends Application{
         
         stage.setTitle("Inventory Management System");
         stage.setScene(rootScene);
+        
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override
+            public void handle(WindowEvent event){
+                Platform.exit();
+            }
+        });
+        
         stage.show();
     }
 }
