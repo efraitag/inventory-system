@@ -27,6 +27,8 @@ public class Home extends Application{
     @Override
     public void start(Stage stage) throws Exception{
         
+        initializeInventory();
+        
         HomeController homeController = new HomeController();
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
@@ -41,10 +43,15 @@ public class Home extends Application{
         stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
             @Override
             public void handle(WindowEvent event){
+                //TODO Save before exit
                 Platform.exit();
             }
         });
         
         stage.show();
+    }
+    
+    public void initializeInventory(){
+        //TODO: load parts/products from file, iterate through and add to lists
     }
 }
