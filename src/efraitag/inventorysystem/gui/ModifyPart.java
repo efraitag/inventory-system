@@ -18,20 +18,20 @@ public class ModifyPart extends FXMLWindow{
     
     private final String PATH = "ModifyPart.fxml";
     private final String TITLE = "Modify Part";
-    private int index;
+    private int id;
     
-    public ModifyPart(int index) throws Exception{
-        this.index = index;
-        start(PATH, TITLE, index);
+    public ModifyPart(int id) throws Exception{
+        this.id = id;
+        start(PATH, TITLE, id);
     }
     
-    public void start(String path, String title, int index) throws Exception{
+    public void start(String path, String title, int id) throws Exception{
         
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(path));
         Parent root = fxmlloader.load();
         
         ModifyPartController controller = fxmlloader.<ModifyPartController>getController();
-        controller.setIndex(index);
+        controller.setId(id);
         
         Scene rootScene = new Scene(root);
         Stage stage = new Stage();

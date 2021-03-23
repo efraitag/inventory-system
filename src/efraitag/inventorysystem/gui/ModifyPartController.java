@@ -5,6 +5,9 @@
  */
 package efraitag.inventorysystem.gui;
 
+import efraitag.inventorysystem.data.InHouse;
+import efraitag.inventorysystem.data.Inventory;
+import efraitag.inventorysystem.data.Outsourced;
 import efraitag.inventorysystem.data.Part;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -28,16 +31,36 @@ public class ModifyPartController {
     @FXML private TextField otherField;
     
     private Part selectedPart;
-    private int selectedIndex;
+    private int selectedId;
     
     @FXML
     public void initialize(){
         
     }
     
-    public void setIndex(int index){
-        selectedIndex = index;
-        System.out.println(index);
+    public void setId(int id){
+        selectedId = id;
+        selectedPart = Inventory.lookupPart(id);
+        
+        setTextFieldValues();
+    }
+    
+    public void setTextFieldValues(){
+        idField.setText(Integer.toString(selectedPart.getId()));
+        nameField.setText(selectedPart.getName());
+        stockField.setText(Integer.toString(selectedPart.getStock()));
+        priceField.setText(Double.toString(selectedPart.getPrice()));
+        minField.setText(Integer.toString(selectedPart.getMin()));
+        maxField.setText(Integer.toString(selectedPart.getMax()));
+        
+        if (selectedPart instanceof InHouse){
+            //TODO how to make it so its an inhouse or outsourced??
+            otherField.setText(Integer.toString(selectedPart.getMachineId()));
+        }
+        else if (selectedPart instanceof Outsourced){
+        }
+        
+        
     }
     
     

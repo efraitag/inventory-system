@@ -104,8 +104,8 @@ public class HomeController {
     public void openModifyPart(){
 
         try{
-            int index = partTable.getSelectionModel().getSelectedItems().get(0).getId();
-            FXMLWindow window = new ModifyPart(index);
+            int id = partTable.getSelectionModel().getSelectedItems().get(0).getId();
+            FXMLWindow window = new ModifyPart(id);
         } catch(Exception e) {
             new Alert(Alert.AlertType.ERROR, e.toString()).showAndWait();
         }
