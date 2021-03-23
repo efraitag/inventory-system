@@ -10,6 +10,7 @@ import efraitag.inventorysystem.data.Part;
 import efraitag.inventorysystem.data.Product;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.fxml.FXML;
@@ -36,18 +37,21 @@ public class HomeController {
     private TableViewSelectionModel productTableSelectionModel;
     private ObservableList partTableCols;
     private ObservableList productTableCols;
+    private ObservableList observablePartList;
     
     public void HomeController() {
-        //pass
+        observablePartList = Inventory.getAllParts();
     }
     
     @FXML
     public void initialize(){
         partTableSelectionModel = partTable.getSelectionModel();
         productTableSelectionModel = productTable.getSelectionModel();
-        //TODO: Populate tables with data from file
-        //TODO: !!Inventory initializes with data from file
-        //table.setItems(Inventory.getAllParts());
+        /*
+        observablePartList.addListener((ListChangeListener<? super Part>) e -> {
+            partTable.setItems(observablePartList);
+        });*/
+        partTable.setItems(Inventory.getAllParts());
     }
     
     /**
@@ -155,6 +159,15 @@ public class HomeController {
         else{
             productTable.getItems().remove(selectedProduct.get(0));
         }
+    }
+    
+    /**
+     * 
+     */
+    public void update(){
+        partTable.setItems(Inventory.getAllParts());
+        System.out.println(Inventory.getAllParts());
+        System.out.println("fuck this, honestly..");
     }
     
     /**

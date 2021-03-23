@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="efraitag.inventorysystem.gui.AddPartController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0">
          <children>
@@ -29,12 +29,11 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <RadioButton mnemonicParsing="false" selected="true" text="In-House">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="Source" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Outsourced" toggleGroup="$Source" />
+                  <fx:define>
+                      <ToggleGroup fx:id="Source"/>
+                  </fx:define>
+                  <RadioButton fx:id="inHouse" mnemonicParsing="false" selected="true" text="In-House" toggleGroup="$Source" onAction="#toggleContext"/>
+                  <RadioButton fx:id="outsourced" mnemonicParsing="false" text="Outsourced" toggleGroup="$Source" onAction="#toggleContext"/>
                </children>
                <VBox.margin>
                   <Insets />
@@ -61,23 +60,23 @@
                   <Label text="Inv" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
                   <Label text="Price/Cost" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
                   <Label text="Max" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
-                  <Label text="Machine ID" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
+                  <Label fx:id="machineOrCompany" text="Machine ID" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
                   <TextField disable="true" editable="false" text="Auto Gen- Disabled" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Arial Italic" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <TextField GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <TextField GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <TextField fx:id="name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <TextField fx:id="inv" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <TextField fx:id="price" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <TextField fx:id="max" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <TextField fx:id="other" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                   <Label text="Min" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Label>
-                  <TextField GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <TextField fx:id="min" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>
                   <Insets left="50.0" right="50.0" />
@@ -85,8 +84,8 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                <children>
-                  <Button mnemonicParsing="false" text="Save" />
-                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="Save" onAction="#save"/>
+                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" onAction="#closeWindow"/>
                </children>
                <VBox.margin>
                   <Insets right="150.0" />

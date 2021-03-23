@@ -26,4 +26,4 @@ public abstract class FXMLWindow {
         stage.show();
     }
     
-}
+    }

@@ -139,7 +139,7 @@ public class Inventory {
      * @return copy of allParts
      */
     public static ObservableList<Part> getAllParts(){
-        return FXCollections.observableArrayList(new ArrayList<Part>(allParts));
+        return allParts;
     }
 
     /**
@@ -147,7 +147,7 @@ public class Inventory {
      * @return copy of allProducts
      */
     public static ObservableList<Product> getAllProducts(){
-        return FXCollections.observableArrayList(new ArrayList<Product>(allProducts));
+        return allProducts;
     }
 
 }
