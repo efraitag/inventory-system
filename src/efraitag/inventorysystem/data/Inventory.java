@@ -62,7 +62,7 @@ public class Inventory {
         ObservableList<Part> out = FXCollections.observableArrayList(new ArrayList<Part>());
         
         for (Part i : allParts){
-            if (i.getName().equals(partName)){
+            if (i.getName().contains(partName)){
                 out.add(i);
             }
         }

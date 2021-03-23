@@ -14,6 +14,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 
@@ -63,13 +64,14 @@ public class HomeController {
         
         //if blank, reset to default
         if(searchText.equals("")){
-            //TODO: reset table values to default
+            partTable.setItems(Inventory.getAllParts());
         }
         
         //if contains a digit, try and parse
-        if(searchText.matches("\\d")){
+        else if(searchText.matches("\\d")){
             try{
                 resultList.setAll(Inventory.lookupPart(Integer.parseInt(searchText)));
+                partTable.setItems(resultList);
             }
             catch(Exception e){
                 //is mixed, please enter either ID or name
@@ -80,10 +82,9 @@ public class HomeController {
         //if just a name, search names and populate table
         else{
             resultList = Inventory.lookupPart(searchText);
+            partTable.setItems(resultList);
         }
         
-        //now iterate through resultList and populate table with it
-        //TODO: Table.setItems(resultList);
     }
     
     /**
@@ -101,9 +102,13 @@ public class HomeController {
      * 
      */
     public void openModifyPart(){
+
         try{
-            FXMLWindow window = new ModifyPart();
-        } catch(Exception e) {}
+            int index = partTable.getSelectionModel().getSelectedItems().get(0).getId();
+            FXMLWindow window = new ModifyPart(index);
+        } catch(Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.toString()).showAndWait();
+        }
     }
     
     /**
