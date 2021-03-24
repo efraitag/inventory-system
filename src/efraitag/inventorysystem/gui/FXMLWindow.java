@@ -4,31 +4,26 @@
  * and open the template in the editor.
  */
 package efraitag.inventorysystem.gui;
-
-import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+
 
 /**
  *
  * @author Eden
  */
-public class app extends Application{
+public abstract class FXMLWindow {
     
-    public static void main(String[] args){
-        launch(args);
-    }
-    
-    @Override
-    public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("app.fxml"));
+    public void start(String path, String title) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource(path));
         
         Scene rootScene = new Scene(root);
-        
-        stage.setTitle("Inventory Management System");
+        Stage stage = new Stage();
+        stage.setTitle(title);
         stage.setScene(rootScene);
         stage.show();
     }
+    
 }

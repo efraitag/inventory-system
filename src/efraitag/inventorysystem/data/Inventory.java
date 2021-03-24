@@ -37,7 +37,7 @@ public class Inventory {
             }
         }
         return null;
-    }
+    }  
     
     /**
      * 
@@ -60,9 +60,10 @@ public class Inventory {
      */
     public static ObservableList<Part> lookupPart(String partName){
         ObservableList<Part> out = FXCollections.observableArrayList(new ArrayList<Part>());
+        partName = partName.toLowerCase();
         
         for (Part i : allParts){
-            if (i.getName().equals(partName)){
+            if (i.getName().toLowerCase().contains(partName)){
                 out.add(i);
             }
         }
@@ -109,6 +110,21 @@ public class Inventory {
     
     /**
      * 
+     * @param selectedPart part to modify in list
+     * 
+     * overloaded function, takes in a part and if a part in the list
+     * matches the id, sets it to that
+     */
+    public static void updatePart(Part selectedPart){
+        for(int i = 0; i < allParts.size(); i++){
+            if(allParts.get(i).getId() == selectedPart.getId()){
+                allParts.set(i, selectedPart);
+            }
+        }
+    }
+    
+    /**
+     * 
      * @param index index of allProducts
      * @param newProduct new Product to set
      */
@@ -139,7 +155,7 @@ public class Inventory {
      * @return copy of allParts
      */
     public static ObservableList<Part> getAllParts(){
-        return FXCollections.observableArrayList(new ArrayList<Part>(allParts));
+        return allParts;
     }
 
     /**
@@ -147,7 +163,7 @@ public class Inventory {
      * @return copy of allProducts
      */
     public static ObservableList<Product> getAllProducts(){
-        return FXCollections.observableArrayList(new ArrayList<Product>(allProducts));
+        return allProducts;
     }
 
 }
