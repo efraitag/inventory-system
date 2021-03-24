@@ -70,7 +70,6 @@ public class AddPartController {
      */
     public void closeWindow(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
-        System.out.println(Inventory.getAllParts());
         stage.close();
     }
     

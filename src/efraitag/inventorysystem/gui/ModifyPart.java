@@ -25,11 +25,19 @@ public class ModifyPart extends FXMLWindow{
         start(PATH, TITLE, id);
     }
     
+    /**
+     * Overloads FXMLWindow.start
+     * @param path the fielpath to the fxml document
+     * @param title the window title
+     * @param id the id of the Part to grab initializing data from
+     * @throws Exception 
+     */
     public void start(String path, String title, int id) throws Exception{
         
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(path));
         Parent root = fxmlloader.load();
         
+        //initialize textfield values after loading window fxml
         ModifyPartController controller = fxmlloader.<ModifyPartController>getController();
         controller.setId(id);
         

@@ -102,7 +102,6 @@ public class HomeController {
      * 
      */
     public void openModifyPart(){
-
         try{
             int id = partTable.getSelectionModel().getSelectedItems().get(0).getId();
             FXMLWindow window = new ModifyPart(id);
@@ -115,15 +114,8 @@ public class HomeController {
      * 
      */
     public void deletePart(){
-        ObservableList<Integer> selectedPart = partTableSelectionModel.getSelectedIndices();
-        
-        if(selectedPart == null){
-            //TODO Error pop-up
-            return;
-        }
-        else{
-            partTable.getItems().remove(selectedPart.get(0));
-        }
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        Inventory.deletePart(selectedPart);
     }
     
     /**

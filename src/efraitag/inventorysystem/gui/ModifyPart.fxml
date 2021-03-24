@@ -29,12 +29,11 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <RadioButton mnemonicParsing="false" selected="true" text="In-House">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="Source" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Outsourced" toggleGroup="$Source" />
+                  <fx:define>
+                      <ToggleGroup fx:id="Source" />
+                  </fx:define>
+                  <RadioButton fx:id="inHouse" mnemonicParsing="false" selected="true" text="In-House" toggleGroup="$Source" onAction="#toggleContext"/>
+                  <RadioButton fx:id="outsourced" mnemonicParsing="false" text="Outsourced" toggleGroup="$Source" onAction="#toggleContext"/>
                </children>
                <VBox.margin>
                   <Insets />
@@ -61,7 +60,7 @@
                   <Label text="Inv" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
                   <Label text="Price/Cost" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
                   <Label text="Max" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
-                  <Label text="Machine ID" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
+                  <Label fx:id="machineOrCompany" text="Machine ID" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
                   <TextField fx:id="idField" disable="true" editable="false" text="Auto Gen- Disabled" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Arial Italic" size="12.0" />
@@ -85,8 +84,8 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                <children>
-                  <Button mnemonicParsing="false" text="Save" />
-                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="Save" onAction="#save"/>
+                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" onAction="#closeWindow"/>
                </children>
                <VBox.margin>
                   <Insets right="150.0" />
