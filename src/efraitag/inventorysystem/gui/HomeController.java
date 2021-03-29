@@ -53,6 +53,7 @@ public class HomeController {
             partTable.setItems(observablePartList);
         });*/
         partTable.setItems(Inventory.getAllParts());
+        productTable.setItems(Inventory.getAllProducts());
     }
     
     /**

@@ -27,7 +27,7 @@ public class ModifyPart extends FXMLWindow{
     
     /**
      * Overloads FXMLWindow.start
-     * @param path the fielpath to the fxml document
+     * @param path the filepath to the fxml document
      * @param title the window title
      * @param id the id of the Part to grab initializing data from
      * @throws Exception 
