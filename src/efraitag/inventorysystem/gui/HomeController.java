@@ -58,21 +58,22 @@ public class HomeController {
     
     /**
      * 
+     * @param searchText
+     * @return 
      */
-    public void doPartSearch(){
-        String searchText = partSearch.getText();
+    public static ObservableList<Part> partSearch(String searchText){
         ObservableList<Part> resultList = FXCollections.observableArrayList(new ArrayList<>());
         
         //if blank, reset to default
         if(searchText.equals("")){
-            partTable.setItems(Inventory.getAllParts());
+            return Inventory.getAllParts();
         }
         
         //if contains a digit, try and parse
         else if(searchText.matches("\\d")){
             try{
                 resultList.setAll(Inventory.lookupPart(Integer.parseInt(searchText)));
-                partTable.setItems(resultList);
+                return resultList;
             }
             catch(Exception e){
                 //is mixed, please enter either ID or name
@@ -83,9 +84,18 @@ public class HomeController {
         //if just a name, search names and populate table
         else{
             resultList = Inventory.lookupPart(searchText);
-            partTable.setItems(resultList);
+            return resultList;
         }
         
+        return null;
+    }
+    
+    /**
+     * 
+     */
+    public void doPartSearch(){
+        String searchText = partSearch.getText();
+        partTable.setItems(partSearch(searchText));       
     }
     
     /**
@@ -121,9 +131,44 @@ public class HomeController {
     
     /**
      * 
+     * @param searchText
+     * @return 
+     */
+    public static ObservableList<Product> productSearch(String searchText){
+        ObservableList<Product> resultList = FXCollections.observableArrayList(new ArrayList<>());
+        
+        //if blank, reset to default
+        if(searchText.equals("")){
+            return Inventory.getAllProducts();
+        }
+        
+        //if contains a digit, try and parse
+        else if(searchText.matches("\\d")){
+            try{
+                resultList.setAll(Inventory.lookupProduct(Integer.parseInt(searchText)));
+                return resultList;
+            }
+            catch(Exception e){
+                //is mixed, please enter either ID or name
+                System.out.println(e);
+            }
+        }
+        
+        //if just a name, search names and populate table
+        else{
+            resultList = Inventory.lookupProduct(searchText);
+            return resultList;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * 
      */
     public void doProductSearch(){
-        //TODO
+        String searchText = productSearch.getText();
+        productTable.setItems(productSearch(searchText));
     }
     
     /**
@@ -140,7 +185,8 @@ public class HomeController {
      */
     public void openModifyProduct(){
         try{
-            FXMLWindow window = new ModifyProduct();
+            int id = productTable.getSelectionModel().getSelectedItems().get(0).getId();
+            FXMLWindow window = new ModifyProduct(id);
         } catch(Exception e){}
     }
     

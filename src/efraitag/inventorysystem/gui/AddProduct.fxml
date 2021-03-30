@@ -66,7 +66,7 @@
             </VBox>
             <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="500.0">
                <children>
-                  <TextField alignment="TOP_LEFT" maxWidth="175.0" promptText="Search by Part ID or Name">
+                  <TextField fx:id="searchBar" alignment="TOP_LEFT" maxWidth="175.0" promptText="Search by Part ID or Name" onAction="#doPartSearch">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

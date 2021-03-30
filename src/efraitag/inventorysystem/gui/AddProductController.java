@@ -32,6 +32,7 @@ public class AddProductController{
     @FXML private TextField min;
     @FXML private Button cancelButton;
     
+    @FXML private TextField searchBar;
     @FXML private TableView partsTable;
     @FXML private TableView associatedPartsTable;
     
@@ -118,6 +119,7 @@ public class AddProductController{
      * Sorts Part table based on user input
      */
     public void doPartSearch(){
-        
+        String searchText = searchBar.getText();
+        partsTable.setItems(HomeController.partSearch(searchText));
     }
 }

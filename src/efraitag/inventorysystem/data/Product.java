@@ -144,6 +144,6 @@ public class Product {
      * @return copy of associatedParts
      */
     public ObservableList<Part> getAllAssociatedParts(){
-        return FXCollections.observableArrayList(new ArrayList<Part>(associatedParts));
+        return associatedParts;
     }
 }
