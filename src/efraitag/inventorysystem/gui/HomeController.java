@@ -208,17 +208,13 @@ public class HomeController {
     /**
      * 
      */
-    public void update(){
-        partTable.setItems(Inventory.getAllParts());
-        System.out.println(Inventory.getAllParts());
-        System.out.println("fuck this, honestly..");
-    }
-    
-    /**
-     * 
-     */
     public void exitApplication(){
         //TODO Save before exit
         System.exit(0);
+    }
+    
+    public void updateTables(){
+        partTable.refresh();
+        productTable.refresh();
     }
 }

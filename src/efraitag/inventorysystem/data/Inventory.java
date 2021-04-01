@@ -83,9 +83,10 @@ public class Inventory {
      */
     public static ObservableList<Product> lookupProduct(String productName){
         ObservableList<Product> out = FXCollections.observableArrayList(new ArrayList<Product>());
+        productName = productName.toLowerCase();
         
         for (Product i: allProducts){
-            if (i.getName().equals(productName)){
+            if (i.getName().toLowerCase().contains(productName)){
                 out.add(i);
             }
         }
