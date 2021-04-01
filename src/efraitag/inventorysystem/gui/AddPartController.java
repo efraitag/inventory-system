@@ -23,26 +23,16 @@ import javafx.stage.Stage;
  */
 public class AddPartController {
     
-    @FXML
-    private RadioButton inHouse;
-    @FXML
-    private RadioButton outsourced;
-    @FXML
-    private Label machineOrCompany;
-    @FXML
-    private Button cancelButton;
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField inv;
-    @FXML
-    private TextField price;
-    @FXML
-    private TextField max;
-    @FXML
-    private TextField min;
-    @FXML
-    private TextField other;
+    @FXML private RadioButton inHouse;
+    @FXML private RadioButton outsourced;
+    @FXML private Label machineOrCompany;
+    @FXML private Button cancelButton;
+    @FXML private TextField name;
+    @FXML private TextField inv;
+    @FXML private TextField price;
+    @FXML private TextField max;
+    @FXML private TextField min;
+    @FXML private TextField other;
 
   
     public void AddPartController(){
