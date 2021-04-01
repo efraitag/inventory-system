@@ -46,11 +46,18 @@ public class ModifyProductController {
         
     }
     
+    /**
+     * 
+     * @param id 
+     */
     public void setId(int id){
         this.id = id;
         setValues();
     }
     
+    /**
+     * 
+     */
     public void setValues(){
         
         selectedProduct = Inventory.lookupProduct(id);
@@ -68,6 +75,9 @@ public class ModifyProductController {
         
     }
     
+    /**
+     * 
+     */
     public void doPartSearch(){
         String searchText = searchField.getText();
         
@@ -79,6 +89,9 @@ public class ModifyProductController {
         partsTable.setItems(result);
     }
     
+    /**
+     * 
+     */
     public void addAssociatedPart(){
         ObservableList<Part> selectedParts = partsTable.getSelectionModel().getSelectedItems();
         Part selectedPart = selectedParts.get(0);
@@ -98,6 +111,9 @@ public class ModifyProductController {
         }
     }
     
+    /**
+     * 
+     */
     public void removeAssociatedPart(){
         ObservableList<Part> selectedAssociatedParts = associatedPartsTable.getSelectionModel().getSelectedItems();
         Part selectedAssociatedPart = selectedAssociatedParts.get(0);
@@ -111,11 +127,17 @@ public class ModifyProductController {
         }
     }
     
+    /**
+     * 
+     */
     public void closeWindow(){
         Stage s = (Stage) cancelButton.getScene().getWindow();
         s.close();
     }
     
+    /**
+     * 
+     */
     public void save(){
         Product newProduct = new Product(
             id,
