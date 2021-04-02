@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 /**
- *
  * @author Eden
+ * This class creates and opens the AddPart window
+ * FUTURE ENHANCEMENT make the main frame disappear when this opens.
  */
 public class AddPart extends FXMLWindow{
     

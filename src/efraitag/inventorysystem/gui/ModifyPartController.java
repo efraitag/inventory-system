@@ -108,14 +108,19 @@ public class ModifyPartController {
                         otherField.getText());
             }
             
-            Inventory.updatePart(toSave);
+            Inventory.updatePart(selectedPart);
             closeWindow();
             
-        } catch(Exception e){
-            new Alert(AlertType.ERROR, e.toString()).showAndWait();
+        }
+        //catches wrong types in the input fields
+        catch(Exception e){
+            new Alert(AlertType.ERROR, "One or more fields incorrect type.").showAndWait();
         }
     }
     
+    /**
+     * Closes the ModifyPart Window
+     */
     public void closeWindow(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();

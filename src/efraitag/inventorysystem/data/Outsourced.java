@@ -1,5 +1,9 @@
 package efraitag.inventorysystem.data;
 
+/**
+ * @author Eden
+ * This class describes a Part that is associated with an outsourced company
+ */
 public class Outsourced extends Part{
 
     private String companyName;

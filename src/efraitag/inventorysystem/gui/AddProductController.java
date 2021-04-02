@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.Inventory;
@@ -13,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -20,8 +17,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- *
  * @author Eden
+ * This class controls the AddProduct window
+ * FUTURE ENHANCEMENT make the main window disappear while this is active
  */
 public class AddProductController{
     
@@ -40,7 +38,9 @@ public class AddProductController{
     private TableViewSelectionModel associatedPartsTableSelectionModel;
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList(new ArrayList<Part>());
     
-    
+    /**
+     * initializes the Part tables
+     */
     @FXML
     public void initialize(){
         partsTable.setItems(Inventory.getAllParts());
@@ -69,6 +69,10 @@ public class AddProductController{
             //add to the table
             associatedParts.add(newAssociatedPart.get(0));
         }
+        //if the part selection is empty, display error.
+        else{
+            new Alert(AlertType.ERROR, "Selection is Empty.").showAndWait();
+        }
     }
     
     /**
@@ -77,8 +81,9 @@ public class AddProductController{
     public void removeAssociatedPart(){
         ObservableList<Part> associatedPart = associatedPartsTableSelectionModel.getSelectedItems();
         
+        //if selection empty, display error
         if(associatedPart.isEmpty()){
-            new Alert(Alert.AlertType.ERROR, "Please select an associated part to remove.").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Selection is empty.").showAndWait();
         }
         else{
            associatedParts.remove(associatedPart.get(0)); 
@@ -87,6 +92,7 @@ public class AddProductController{
     
     /**
      * saves new part and closes window
+     * id is auto generated based on the size of the product list in Inventory
      */
     public void save(){
         int id = Inventory.getAllProducts().size() + 1;

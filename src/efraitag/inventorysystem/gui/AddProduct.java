@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 /**
- *
  * @author Eden
+ * This class opens the AddProduct Window
+ * FUTURE ENHANCEMENT make the main window disappear while this is active
  */
 public class AddProduct extends FXMLWindow{
     

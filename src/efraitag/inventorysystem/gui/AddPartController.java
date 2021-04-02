@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.InHouse;
@@ -18,13 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- *
  * @author Eden
+ * This class controls the AddPart Window
+ * FUTURE ENHANCEMENT make the main window disappear when this opens
  */
 public class AddPartController {
     
     @FXML private RadioButton inHouse;
-    @FXML private RadioButton outsourced;
     @FXML private Label machineOrCompany;
     @FXML private Button cancelButton;
     @FXML private TextField name;
@@ -33,18 +29,11 @@ public class AddPartController {
     @FXML private TextField max;
     @FXML private TextField min;
     @FXML private TextField other;
-
-  
-    public void AddPartController(){
-        
-    }
-    
-    @FXML
-    public void initialize(){
-    }
     
     /**
      * Sets the last textfield to different text depending on the type of part being added
+     * RUNTIME ERROR initially, the radio buttons were not part of the same togglegroup.
+     * this was fixed by manually editing the FXML code that was imported from scene builder.
      */
     public void toggleContext(){
         if (inHouse.isSelected()){
@@ -93,11 +82,16 @@ public class AddPartController {
             }
             closeWindow();
         }
+        //Catches if incorrect types in the input fields
         catch(Exception e){
-            new Alert(AlertType.ERROR, e.toString()).showAndWait();
+            new Alert(AlertType.ERROR, "One or more fields have incorrect types.").showAndWait();
         }
     }
     
+    /**
+     * 
+     * @return returns a unique id based on the size of the Part list in Inventory 
+     */
     public int generateId(){
         return Inventory.getAllParts().size() + 1;
     }

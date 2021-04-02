@@ -4,6 +4,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.*;
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Eden
+ * This class keeps track of all parts and products in inventory, as well as
+ * provides static functions to manipulate the Parts and Products lists.
+ * 
+ * FUTURE ENHANCEMENT implement a fast search algorithm for looking
+ * up products and parts
+ */
+
 public class Inventory {
 
     private static ObservableList<Part> allParts = FXCollections.observableArrayList(new ArrayList<Part>());
@@ -153,7 +163,7 @@ public class Inventory {
 
     /**
      * 
-     * @return copy of allParts
+     * @return return list of all Parts
      */
     public static ObservableList<Part> getAllParts(){
         return allParts;
@@ -161,7 +171,7 @@ public class Inventory {
 
     /**
      * 
-     * @return copy of allProducts
+     * @return return list of all Products
      */
     public static ObservableList<Product> getAllProducts(){
         return allProducts;
