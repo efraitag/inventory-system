@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 /**
  * @author Eden
  * This class controls the main window of the application
- * FUTURE ENHANCEMENT handle Exceptions with more than just a system.out
+ * FUTURE ENHANCEMENT move the static methods to Inventory or FXMLWindow
  */
 public class HomeController {
     
@@ -50,8 +50,10 @@ public class HomeController {
     
     /**
      * 
-     * @param searchText
-     * @return 
+     * @param searchText the string to search partList for
+     * @return an ObservableList containing one Part if the
+     * passed String is an Id, otherwise returns a list of all
+     * the Parts with names that contain searchText
      */
     public static ObservableList<Part> partSearch(String searchText){
         ObservableList<Part> resultList = FXCollections.observableArrayList(new ArrayList<>());
@@ -86,7 +88,7 @@ public class HomeController {
     }
     
     /**
-     * 
+     * Sets the Parts Table to the output of partSearch
      */
     public void doPartSearch(){
         String searchText = partSearch.getText();
@@ -94,18 +96,22 @@ public class HomeController {
     }
     
     /**
-     * RUNTIME ERROR exceptions from AddPart constructor were not handled,
-     *               so it was surrounded in a try catch statement
+     * This method opens the Add Part window
+     *
+     * RUNTIME ERROR file not found exceptions from AddPart constructor were not handled,
+     * so it was surrounded in a try catch statement
      */
     public void openAddPart(){
         try{
             FXMLWindow window = new AddPart();
         }
-        catch(Exception e){}
+        catch(Exception e){
+            new Alert(AlertType.ERROR, "File not found.").showAndWait();
+        }
     }
     
     /**
-     * 
+     * This method opens the Modify Part window
      */
     public void openModifyPart(){
         try{
@@ -117,7 +123,7 @@ public class HomeController {
     }
     
     /**
-     * 
+     * This method deletes a Part from the partTable that the user has selected
      */
     public void deletePart(){
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
@@ -126,8 +132,12 @@ public class HomeController {
     
     /**
      * 
-     * @param searchText
-     * @return 
+     * @param searchText the string to search the productList for
+     *
+     * @return returns an ObservableList that contains one Product if
+     * the passed string is an id, otherwise returns a list of all Products
+     * with the passed string in their name
+     *
      */
     public static ObservableList<Product> productSearch(String searchText){
         ObservableList<Product> resultList = FXCollections.observableArrayList(new ArrayList<>());
@@ -161,7 +171,7 @@ public class HomeController {
     }
     
     /**
-     * 
+     * Updates the productTable with the results of productSearch
      */
     public void doProductSearch(){
         String searchText = productSearch.getText();
@@ -169,7 +179,7 @@ public class HomeController {
     }
     
     /**
-     * 
+     * This method opens the Add Product window
      */
     public void openAddProduct(){
         try{
@@ -178,7 +188,7 @@ public class HomeController {
     }
     
     /**
-     * 
+     * This method oepns the modify product window
      */
     public void openModifyProduct(){
         try{
@@ -188,7 +198,7 @@ public class HomeController {
     }
     
     /**
-     * 
+     * This method deletes a Product from the Product Table that the user has selected
      */
     public void deleteProduct(){
         ObservableList<Integer> selectedProduct = productTableSelectionModel.getSelectedIndices();
@@ -203,13 +213,16 @@ public class HomeController {
     }
     
     /**
-     * 
+     * UNUSED This method exits the entire application
      */
     public void exitApplication(){
         //TODO Save before exit
         System.exit(0);
     }
     
+    /**
+      * UNUSED this method updates the Part and Product tables
+     */
     public void updateTables(){
         partTable.refresh();
         productTable.refresh();
