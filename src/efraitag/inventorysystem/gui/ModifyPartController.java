@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.InHouse;
@@ -21,6 +17,7 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
+ * This class controls the Modfiy Part Window
  */
 public class ModifyPartController {
     
@@ -43,17 +40,22 @@ public class ModifyPartController {
     private Part selectedPart;
     private int selectedId;
     
-    @FXML
-    public void initialize(){
-        
-    }
-    
+    /**
+    *@param id The id of the Part being modified
+    * This method sets the local reference to the id
+    * of the part being modified and then calls
+    * setTextField to finish initializing values
+    */
     public void setId(int id){
         selectedId = id;
         selectedPart = Inventory.lookupPart(id);
         setTextFieldValues();
     }
     
+    /**
+    * This method sets the text field values to the values
+    * associated with the part being modified
+    */
     public void setTextFieldValues(){
         idField.setText(Integer.toString(selectedPart.getId()));
         nameField.setText(selectedPart.getName());
@@ -73,6 +75,10 @@ public class ModifyPartController {
         }            
     }
     
+    /**
+    * This method switches the last text field when
+    * the user togggles the InHouse and Outsourced radio buttons
+    */
     public void toggleContext(){
         if(this.inHouse.isSelected()){
             machineOrCompany.setText("Machine ID");
@@ -82,7 +88,22 @@ public class ModifyPartController {
         }
     }
     
+    public boolean errorCheck(){
+        return false;
+        //TODO
+        //check if min <= inv <= max
+    }
+    
+    /**
+    * This method saves the new values the user entered to the
+    * Part id in Inventory's part list
+    */
     public void save(){
+        
+        boolean areErrors = errorCheck();
+        if(areErrors){
+            return;
+        }
         
         try{
             Part toSave;
