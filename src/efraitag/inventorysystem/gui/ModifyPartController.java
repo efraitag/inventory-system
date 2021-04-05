@@ -88,10 +88,31 @@ public class ModifyPartController {
         }
     }
     
-    public boolean errorCheck(){
+    /**
+    * checks if min<inv<max
+    *
+    */
+     public boolean errorCheck(){
+        try{
+            int min = Integer.parseInt(min.getText());
+            int inv = Integer.parseInt(min.getText());
+            int max = Integer.parseInt(min.getText());
+        }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
+            return true;
+        }
+        
+        if(!(min<max)){
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
+            return true;
+        }
+        if(!(min<=inv && inv>=max)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
+            return true;
+        }
+        
         return false;
-        //TODO
-        //check if min <= inv <= max
     }
     
     /**
@@ -101,36 +122,35 @@ public class ModifyPartController {
     public void save(){
         
         boolean areErrors = errorCheck();
-        if(areErrors){
-            return;
-        }
         
-        try{
-            Part toSave;
-            
-            if(this.inHouse.isSelected()){
-                toSave = new InHouse(
-                        Integer.parseInt(idField.getText()),
-                        nameField.getText(),
-                        Double.parseDouble(priceField.getText()),
-                        Integer.parseInt(stockField.getText()),
-                        Integer.parseInt(minField.getText()),
-                        Integer.parseInt(maxField.getText()),
-                        Integer.parseInt(otherField.getText()));
-            }
-            else{              
-                toSave = new Outsourced(
-                        Integer.parseInt(idField.getText()),
-                        nameField.getText(),
-                        Double.parseDouble(priceField.getText()),
-                        Integer.parseInt(stockField.getText()),
-                        Integer.parseInt(minField.getText()),
-                        Integer.parseInt(maxField.getText()),
-                        otherField.getText());
-            }
-            
-            Inventory.updatePart(selectedPart);
-            closeWindow();
+        if(!areErrors){
+            try{
+                Part toSave;
+
+                if(this.inHouse.isSelected()){
+                    toSave = new InHouse(
+                            Integer.parseInt(idField.getText()),
+                            nameField.getText(),
+                            Double.parseDouble(priceField.getText()),
+                            Integer.parseInt(stockField.getText()),
+                            Integer.parseInt(minField.getText()),
+                            Integer.parseInt(maxField.getText()),
+                            Integer.parseInt(otherField.getText()));
+                }
+                else{              
+                    toSave = new Outsourced(
+                            Integer.parseInt(idField.getText()),
+                            nameField.getText(),
+                            Double.parseDouble(priceField.getText()),
+                            Integer.parseInt(stockField.getText()),
+                            Integer.parseInt(minField.getText()),
+                            Integer.parseInt(maxField.getText()),
+                            otherField.getText());
+                }
+
+                Inventory.updatePart(selectedPart);
+                closeWindow();
+         }
             
         }
         //catches wrong types in the input fields
