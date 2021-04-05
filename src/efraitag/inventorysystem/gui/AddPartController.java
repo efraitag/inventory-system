@@ -63,16 +63,16 @@ public class AddPartController {
             int max = Integer.parseInt(min.getText());
         }
         catch (Exception e){
-            new Alert(AlertType.ERROR, "Inventory fields are not numbers.");
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
             return true;
         }
         
         if(!(min<max)){
-            new Alert(AlertType.ERROR, "Min must be less than max.");
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
             return true;
         }
         if(!(min<=inv && inv>=max)){
-            new Alert(AlertType.ERROR, "Inventory must be between min and max.");
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
             return true;
         }
         
