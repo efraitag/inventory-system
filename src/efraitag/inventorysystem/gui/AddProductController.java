@@ -90,27 +90,61 @@ public class AddProductController{
         }
     }
     
+     /**
+    * This function checks whether the min<inv<max
+    *
+    */
+    public boolean errorCheck(){
+        try{
+            int min = Integer.parseInt(min.getText());
+            int inv = Integer.parseInt(min.getText());
+            int max = Integer.parseInt(min.getText());
+        }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
+            return true;
+        }
+        
+        if(!(min<max)){
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
+            return true;
+        }
+        if(!(min<=inv && inv>=max)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
+            return true;
+        }
+        
+        return false;
+    }
+    
     /**
      * saves new part and closes window
      * id is auto generated based on the size of the product list in Inventory
      */
     public void save(){
         int id = Inventory.getAllProducts().size() + 1;
+        boolean areErrors = errorCheck();
         
-        Product newProduct = new Product(
-                        id,
-                        name.getText(),
-                        Double.parseDouble(price.getText()),
-                        Integer.parseInt(inv.getText()),
-                        Integer.parseInt(min.getText()),
-                        Integer.parseInt(max.getText()));
-        
-        for(Part associatedPart: associatedParts){
-            newProduct.addAssociatedPart(associatedPart);
+        if(!areErrors){
+            try{
+                Product newProduct = new Product(
+                                id,
+                                name.getText(),
+                                Double.parseDouble(price.getText()),
+                                Integer.parseInt(inv.getText()),
+                                Integer.parseInt(min.getText()),
+                                Integer.parseInt(max.getText()));
+
+                for(Part associatedPart: associatedParts){
+                    newProduct.addAssociatedPart(associatedPart);
+                }
+
+                Inventory.addProduct(newProduct);
+                closeWindow();
+            } catch (Exception e) {
+                new Alert(AlertType.ERROR, "One or more fields incorrect Data Type.").showAndWait();
+            }
         }
-        
-        Inventory.addProduct(newProduct);
-        closeWindow();
     }
     
     /**
