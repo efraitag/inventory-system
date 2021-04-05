@@ -53,38 +53,68 @@ public class AddPartController {
     }
     
     /**
+    * This function checks whether the min<inv<max
+    *
+    */
+    public boolean errorCheck(){
+        try{
+            int min = Integer.parseInt(min.getText());
+            int inv = Integer.parseInt(min.getText());
+            int max = Integer.parseInt(min.getText());
+        }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.");
+            return true;
+        }
+        
+        if(!(min<max)){
+            new Alert(AlertType.ERROR, "Min must be less than max.");
+            return true;
+        }
+        if(!(min<=inv && inv>=max)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.");
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
      * Creates new Part from user input and adds it to inventory.
      * Will send error message if a field is blank or incorrectly formatted.
      */
     public void save(){
         int id = generateId();
+        boolean areErrors = errorCheck();
         
-        try{
-            if(inHouse.isSelected()){
-                Inventory.addPart(new InHouse(
-                        id,
-                        name.getText(),
-                        Double.parseDouble(price.getText()),
-                        Integer.parseInt(inv.getText()),
-                        Integer.parseInt(min.getText()),
-                        Integer.parseInt(max.getText()),
-                        Integer.parseInt(other.getText())));
+        if(!areErrors){
+            try{
+                if(inHouse.isSelected()){
+                    Inventory.addPart(new InHouse(
+                            id,
+                            name.getText(),
+                            Double.parseDouble(price.getText()),
+                            Integer.parseInt(inv.getText()),
+                            Integer.parseInt(min.getText()),
+                            Integer.parseInt(max.getText()),
+                            Integer.parseInt(other.getText())));
+                }
+                else{
+                    Inventory.addPart(new Outsourced(
+                            id,
+                            name.getText(),
+                            Double.parseDouble(price.getText()),
+                            Integer.parseInt(inv.getText()),
+                            Integer.parseInt(min.getText()),
+                            Integer.parseInt(max.getText()),
+                            other.getText())); 
+                }
+                closeWindow();
             }
-            else{
-                Inventory.addPart(new Outsourced(
-                        id,
-                        name.getText(),
-                        Double.parseDouble(price.getText()),
-                        Integer.parseInt(inv.getText()),
-                        Integer.parseInt(min.getText()),
-                        Integer.parseInt(max.getText()),
-                        other.getText())); 
+            //Catches if incorrect types in the input fields
+            catch(Exception e){
+                new Alert(AlertType.ERROR, "One or more fields have incorrect types.").showAndWait();
             }
-            closeWindow();
-        }
-        //Catches if incorrect types in the input fields
-        catch(Exception e){
-            new Alert(AlertType.ERROR, "One or more fields have incorrect types.").showAndWait();
         }
     }
     
