@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.Inventory;
@@ -20,6 +16,9 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
+ * This class controls the Modify Product window
+ * FUTURE ENHANCEMENT share common functions with addProductController
+ * by making them extend a common superclass
  */
 public class ModifyProductController {
     
@@ -48,7 +47,9 @@ public class ModifyProductController {
     
     /**
      * 
-     * @param id 
+     * @param id the of the product to modify
+     * this function sets the associated product id
+     * as well as calls setValues
      */
     public void setId(int id){
         this.id = id;
@@ -56,7 +57,8 @@ public class ModifyProductController {
     }
     
     /**
-     * 
+     * This function fills all the text fields
+     * with the data from the associated product
      */
     public void setValues(){
         
@@ -76,7 +78,7 @@ public class ModifyProductController {
     }
     
     /**
-     * 
+     * This function searches the part table
      */
     public void doPartSearch(){
         String searchText = searchField.getText();
@@ -90,7 +92,8 @@ public class ModifyProductController {
     }
     
     /**
-     * 
+     * This function associates a selected part with the
+     * product being modified
      */
     public void addAssociatedPart(){
         ObservableList<Part> selectedParts = partsTable.getSelectionModel().getSelectedItems();
@@ -112,7 +115,8 @@ public class ModifyProductController {
     }
     
     /**
-     * 
+     * This function removes the selected associated part
+     * from the product being modified
      */
     public void removeAssociatedPart(){
         ObservableList<Part> selectedAssociatedParts = associatedPartsTable.getSelectionModel().getSelectedItems();
@@ -128,7 +132,7 @@ public class ModifyProductController {
     }
     
     /**
-     * 
+     * This function closes the Modify Product window without closing the program
      */
     public void closeWindow(){
         Stage s = (Stage) cancelButton.getScene().getWindow();
@@ -136,23 +140,58 @@ public class ModifyProductController {
     }
     
     /**
-     * 
-     */
-    public void save(){
-        Product newProduct = new Product(
-            id,
-            name.getText(),
-            Double.parseDouble(price.getText()),
-            Integer.parseInt(inv.getText()),
-            Integer.parseInt(min.getText()),
-            Integer.parseInt(max.getText()));
-        
-        for(Part newPart: associatedParts){
-            newProduct.addAssociatedPart(newPart);
+    * checks if min<inv<max
+    */
+    public boolean errorCheck(){
+        try{
+            int min = Integer.parseInt(min.getText());
+            int inv = Integer.parseInt(min.getText());
+            int max = Integer.parseInt(min.getText());
+        }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
+            return true;
         }
         
-        Inventory.updateProduct(Inventory.getAllProducts().indexOf(selectedProduct), newProduct);
+        if(!(min<max)){
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
+            return true;
+        }
+        if(!(min<=inv && inv>=max)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
+            return true;
+        }
         
-        closeWindow();
+        return false;
+    }
+    
+    /**
+     * This function saves the entered information to the product being modified.
+     * Additionally, before saving it checks for errors in the logic of the data.
+     */
+    public void save(){
+        boolean areErrors = errorCheck();
+        
+        if(!areErrors){
+            try{
+                Product newProduct = new Product(
+                    id,
+                    name.getText(),
+                    Double.parseDouble(price.getText()),
+                    Integer.parseInt(inv.getText()),
+                    Integer.parseInt(min.getText()),
+                    Integer.parseInt(max.getText()));
+
+                for(Part newPart: associatedParts){
+                    newProduct.addAssociatedPart(newPart);
+                }
+
+                Inventory.updateProduct(Inventory.getAllProducts().indexOf(selectedProduct), newProduct);
+
+                closeWindow();
+            }catch (Exception e){
+                new Alert(AlertType.ERROR, "One or more fields wrong Data Type.").showAndWait();
+            }
+        }
     }
 }
