@@ -93,21 +93,32 @@ public class ModifyPartController {
     *
     */
      public boolean errorCheck(){
+     
+        int minVal;
+        int invVal;
+        int maxVal;
+        
+        
         try{
-            int min = Integer.parseInt(min.getText());
-            int inv = Integer.parseInt(min.getText());
-            int max = Integer.parseInt(min.getText());
+            minVal = Integer.parseInt(minField.getText());
+            invVal = Integer.parseInt(stockField.getText());
+            maxVal = Integer.parseInt(maxField.getText());
         }
         catch (Exception e){
             new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
             return true;
         }
         
-        if(!(min<max)){
+        if(minVal == 0 || maxVal == 0 || invVal == 0){
+            new Alert(AlertType.ERROR, "One or more inventory values zero.").showAndWait();
+            return true;
+        }
+        
+        if(!(minVal<maxVal)){
             new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
             return true;
         }
-        if(!(min<=inv && inv>=max)){
+        if(!(minVal<=invVal && invVal<=maxVal)){
             new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
             return true;
         }
@@ -151,12 +162,11 @@ public class ModifyPartController {
                 Inventory.updatePart(selectedPart);
                 closeWindow();
          }
-            
-        }
         //catches wrong types in the input fields
         catch(Exception e){
             new Alert(AlertType.ERROR, "One or more fields incorrect type.").showAndWait();
         }
+      }
     }
     
     /**

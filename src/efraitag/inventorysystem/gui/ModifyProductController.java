@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -119,15 +120,22 @@ public class ModifyProductController {
      * from the product being modified
      */
     public void removeAssociatedPart(){
-        ObservableList<Part> selectedAssociatedParts = associatedPartsTable.getSelectionModel().getSelectedItems();
-        Part selectedAssociatedPart = selectedAssociatedParts.get(0);
+        Part toDelete;
         
-        if(selectedAssociatedPart == null){
-            new Alert(AlertType.ERROR, "No Associated Part Selected").showAndWait();
+        try{
+            toDelete = (Part) associatedPartsTable.getSelectionModel().getSelectedItems().get(0);
+        } catch(IndexOutOfBoundsException e){
+            new Alert(AlertType.ERROR, "Please select a Part to disassociate").showAndWait();
             return;
         }
-        else{
-           associatedParts.remove(selectedAssociatedPart);
+        
+        if(toDelete != null){
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete " + toDelete.getName() + "?");
+            alert.showAndWait().ifPresent(response ->{
+                if(response == ButtonType.OK){
+                    associatedParts.remove(toDelete);
+                }
+            });
         }
     }
     
@@ -143,21 +151,32 @@ public class ModifyProductController {
     * checks if min<inv<max
     */
     public boolean errorCheck(){
+     
+        int minVal;
+        int invVal;
+        int maxVal;
+        
+        
         try{
-            int min = Integer.parseInt(min.getText());
-            int inv = Integer.parseInt(min.getText());
-            int max = Integer.parseInt(min.getText());
+            minVal = Integer.parseInt(min.getText());
+            invVal = Integer.parseInt(inv.getText());
+            maxVal = Integer.parseInt(max.getText());
         }
         catch (Exception e){
             new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
             return true;
         }
         
-        if(!(min<max)){
+        if(minVal == 0 || maxVal == 0 || invVal == 0){
+            new Alert(AlertType.ERROR, "One or more inventory values zero.").showAndWait();
+            return true;
+        }
+        
+        if(!(minVal<maxVal)){
             new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
             return true;
         }
-        if(!(min<=inv && inv>=max)){
+        if(!(minVal<=invVal && invVal<=maxVal)){
             new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
             return true;
         }

@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 
@@ -126,8 +127,24 @@ public class HomeController {
      * This method deletes a Part from the partTable that the user has selected
      */
     public void deletePart(){
-        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
-        Inventory.deletePart(selectedPart);
+ 
+        Part toDelete;
+        
+        try{
+            toDelete = partTable.getSelectionModel().getSelectedItems().get(0);
+        } catch(IndexOutOfBoundsException e){
+            new Alert(AlertType.ERROR, "Please select a part to delete.").showAndWait();
+            return;
+        }
+        
+        if(toDelete != null){
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete " + toDelete.getName() + "?");
+            alert.showAndWait().ifPresent(response ->{
+                if (response == ButtonType.OK){
+                    Inventory.deletePart(toDelete);
+                }
+            });
+        }
     }
     
     /**
@@ -201,14 +218,25 @@ public class HomeController {
      * This method deletes a Product from the Product Table that the user has selected
      */
     public void deleteProduct(){
-        ObservableList<Integer> selectedProduct = productTableSelectionModel.getSelectedIndices();
+        Product toDelete;
         
-        if(selectedProduct == null){
-            //TODO Error pop-up
+        try{
+            toDelete = productTable.getSelectionModel().getSelectedItems().get(0);
+        } catch(IndexOutOfBoundsException e){
+            new Alert(AlertType.ERROR, "Please select a product to delete.").showAndWait();
             return;
         }
+        
+        if(!(toDelete.getAllAssociatedParts().isEmpty())){
+            new Alert(AlertType.ERROR, "Cannot delete selected Product because it has associated parts.").showAndWait();
+        }
         else{
-            productTable.getItems().remove(selectedProduct.get(0));
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete " + toDelete.getName() + "?");
+            alert.showAndWait().ifPresent(response ->{
+                if (response == ButtonType.OK){
+                    Inventory.deleteProduct(toDelete);
+                }
+            });
         }
     }
     

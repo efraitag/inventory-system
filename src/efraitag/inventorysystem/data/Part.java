@@ -4,7 +4,7 @@ package efraitag.inventorysystem.data;
  */
 
 /**
- * @author Eden
+ * 
  * This class describes a Part associated with an id, name, price, stock, and min and max
  */
 public abstract class Part {

@@ -57,21 +57,32 @@ public class AddPartController {
     *
     */
     public boolean errorCheck(){
+        
+        int minVal;
+        int invVal;
+        int maxVal;
+        
+        
         try{
-            int min = Integer.parseInt(min.getText());
-            int inv = Integer.parseInt(min.getText());
-            int max = Integer.parseInt(min.getText());
+            minVal = Integer.parseInt(min.getText());
+            invVal = Integer.parseInt(inv.getText());
+            maxVal = Integer.parseInt(max.getText());
         }
         catch (Exception e){
             new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
             return true;
         }
         
-        if(!(min<max)){
+        if(minVal == 0 || maxVal == 0 || invVal == 0){
+            new Alert(AlertType.ERROR, "One or more inventory values zero.").showAndWait();
+            return true;
+        }
+        
+        if(!(minVal<maxVal)){
             new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
             return true;
         }
-        if(!(min<=inv && inv>=max)){
+        if(!(minVal<=invVal && invVal<=maxVal)){
             new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
             return true;
         }

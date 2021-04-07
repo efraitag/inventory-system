@@ -4,7 +4,7 @@ package efraitag.inventorysystem.gui;
 /**
  * @author Eden
  * This class creates and opens the AddPart window
- * FUTURE ENHANCEMENT make the main frame disappear when this opens.
+ * FUTURE ENHANCEMENT make the main window disappear when this opens.
  */
 public class AddPart extends FXMLWindow{
     
