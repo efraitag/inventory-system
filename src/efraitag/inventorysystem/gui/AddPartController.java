@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.InHouse;
@@ -18,13 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- *
  * @author Eden
+ * This class controls the AddPart Window
+ * FUTURE ENHANCEMENT make the main window disappear when this opens
  */
 public class AddPartController {
     
     @FXML private RadioButton inHouse;
-    @FXML private RadioButton outsourced;
     @FXML private Label machineOrCompany;
     @FXML private Button cancelButton;
     @FXML private TextField name;
@@ -33,18 +29,11 @@ public class AddPartController {
     @FXML private TextField max;
     @FXML private TextField min;
     @FXML private TextField other;
-
-  
-    public void AddPartController(){
-        
-    }
-    
-    @FXML
-    public void initialize(){
-    }
     
     /**
      * Sets the last textfield to different text depending on the type of part being added
+     * RUNTIME ERROR initially, the radio buttons were not part of the same togglegroup.
+     * this was fixed by manually editing the FXML code that was imported from scene builder.
      */
     public void toggleContext(){
         if (inHouse.isSelected()){
@@ -64,40 +53,86 @@ public class AddPartController {
     }
     
     /**
+    * This function checks whether the min<inv<max
+    *
+    */
+    public boolean errorCheck(){
+        
+        int minVal;
+        int invVal;
+        int maxVal;
+        
+        
+        try{
+            minVal = Integer.parseInt(min.getText());
+            invVal = Integer.parseInt(inv.getText());
+            maxVal = Integer.parseInt(max.getText());
+        }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
+            return true;
+        }
+        
+        if(minVal == 0 || maxVal == 0 || invVal == 0){
+            new Alert(AlertType.ERROR, "One or more inventory values zero.").showAndWait();
+            return true;
+        }
+        
+        if(!(minVal<maxVal)){
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
+            return true;
+        }
+        if(!(minVal<=invVal && invVal<=maxVal)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
      * Creates new Part from user input and adds it to inventory.
      * Will send error message if a field is blank or incorrectly formatted.
      */
     public void save(){
         int id = generateId();
+        boolean areErrors = errorCheck();
         
-        try{
-            if(inHouse.isSelected()){
-                Inventory.addPart(new InHouse(
-                        id,
-                        name.getText(),
-                        Double.parseDouble(price.getText()),
-                        Integer.parseInt(inv.getText()),
-                        Integer.parseInt(min.getText()),
-                        Integer.parseInt(max.getText()),
-                        Integer.parseInt(other.getText())));
+        if(!areErrors){
+            try{
+                if(inHouse.isSelected()){
+                    Inventory.addPart(new InHouse(
+                            id,
+                            name.getText(),
+                            Double.parseDouble(price.getText()),
+                            Integer.parseInt(inv.getText()),
+                            Integer.parseInt(min.getText()),
+                            Integer.parseInt(max.getText()),
+                            Integer.parseInt(other.getText())));
+                }
+                else{
+                    Inventory.addPart(new Outsourced(
+                            id,
+                            name.getText(),
+                            Double.parseDouble(price.getText()),
+                            Integer.parseInt(inv.getText()),
+                            Integer.parseInt(min.getText()),
+                            Integer.parseInt(max.getText()),
+                            other.getText())); 
+                }
+                closeWindow();
             }
-            else{
-                Inventory.addPart(new Outsourced(
-                        id,
-                        name.getText(),
-                        Double.parseDouble(price.getText()),
-                        Integer.parseInt(inv.getText()),
-                        Integer.parseInt(min.getText()),
-                        Integer.parseInt(max.getText()),
-                        other.getText())); 
+            //Catches if incorrect types in the input fields
+            catch(Exception e){
+                new Alert(AlertType.ERROR, "One or more fields have incorrect types.").showAndWait();
             }
-            closeWindow();
-        }
-        catch(Exception e){
-            new Alert(AlertType.ERROR, e.toString()).showAndWait();
         }
     }
     
+    /**
+     * 
+     * @return returns a unique id based on the size of the Part list in Inventory 
+     */
     public int generateId(){
         return Inventory.getAllParts().size() + 1;
     }

@@ -1,5 +1,10 @@
 package efraitag.inventorysystem.data;
 
+/**
+ * @author Eden
+ * This class describes a Part associated with an in-house machine
+ */
+
 public class InHouse extends Part{
 
     private int machineId;

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.Inventory;
@@ -13,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,6 +17,9 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
+ * This class controls the Modify Product window
+ * FUTURE ENHANCEMENT share common functions with addProductController
+ * by making them extend a common superclass
  */
 public class ModifyProductController {
     
@@ -46,11 +46,21 @@ public class ModifyProductController {
         
     }
     
+    /**
+     * 
+     * @param id the of the product to modify
+     * this function sets the associated product id
+     * as well as calls setValues
+     */
     public void setId(int id){
         this.id = id;
         setValues();
     }
     
+    /**
+     * This function fills all the text fields
+     * with the data from the associated product
+     */
     public void setValues(){
         
         selectedProduct = Inventory.lookupProduct(id);
@@ -68,6 +78,9 @@ public class ModifyProductController {
         
     }
     
+    /**
+     * This function searches the part table
+     */
     public void doPartSearch(){
         String searchText = searchField.getText();
         
@@ -79,6 +92,10 @@ public class ModifyProductController {
         partsTable.setItems(result);
     }
     
+    /**
+     * This function associates a selected part with the
+     * product being modified
+     */
     public void addAssociatedPart(){
         ObservableList<Part> selectedParts = partsTable.getSelectionModel().getSelectedItems();
         Part selectedPart = selectedParts.get(0);
@@ -98,39 +115,102 @@ public class ModifyProductController {
         }
     }
     
+    /**
+     * This function removes the selected associated part
+     * from the product being modified
+     */
     public void removeAssociatedPart(){
-        ObservableList<Part> selectedAssociatedParts = associatedPartsTable.getSelectionModel().getSelectedItems();
-        Part selectedAssociatedPart = selectedAssociatedParts.get(0);
+        Part toDelete;
         
-        if(selectedAssociatedPart == null){
-            new Alert(AlertType.ERROR, "No Associated Part Selected").showAndWait();
+        try{
+            toDelete = (Part) associatedPartsTable.getSelectionModel().getSelectedItems().get(0);
+        } catch(IndexOutOfBoundsException e){
+            new Alert(AlertType.ERROR, "Please select a Part to disassociate").showAndWait();
             return;
         }
-        else{
-           associatedParts.remove(selectedAssociatedPart);
+        
+        if(toDelete != null){
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete " + toDelete.getName() + "?");
+            alert.showAndWait().ifPresent(response ->{
+                if(response == ButtonType.OK){
+                    associatedParts.remove(toDelete);
+                }
+            });
         }
     }
     
+    /**
+     * This function closes the Modify Product window without closing the program
+     */
     public void closeWindow(){
         Stage s = (Stage) cancelButton.getScene().getWindow();
         s.close();
     }
     
-    public void save(){
-        Product newProduct = new Product(
-            id,
-            name.getText(),
-            Double.parseDouble(price.getText()),
-            Integer.parseInt(inv.getText()),
-            Integer.parseInt(min.getText()),
-            Integer.parseInt(max.getText()));
+    /**
+    * checks if min<inv<max
+    */
+    public boolean errorCheck(){
+     
+        int minVal;
+        int invVal;
+        int maxVal;
         
-        for(Part newPart: associatedParts){
-            newProduct.addAssociatedPart(newPart);
+        
+        try{
+            minVal = Integer.parseInt(min.getText());
+            invVal = Integer.parseInt(inv.getText());
+            maxVal = Integer.parseInt(max.getText());
+        }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
+            return true;
         }
         
-        Inventory.updateProduct(Inventory.getAllProducts().indexOf(selectedProduct), newProduct);
+        if(minVal == 0 || maxVal == 0 || invVal == 0){
+            new Alert(AlertType.ERROR, "One or more inventory values zero.").showAndWait();
+            return true;
+        }
         
-        closeWindow();
+        if(!(minVal<maxVal)){
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
+            return true;
+        }
+        if(!(minVal<=invVal && invVal<=maxVal)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * This function saves the entered information to the product being modified.
+     * Additionally, before saving it checks for errors in the logic of the data.
+     */
+    public void save(){
+        boolean areErrors = errorCheck();
+        
+        if(!areErrors){
+            try{
+                Product newProduct = new Product(
+                    id,
+                    name.getText(),
+                    Double.parseDouble(price.getText()),
+                    Integer.parseInt(inv.getText()),
+                    Integer.parseInt(min.getText()),
+                    Integer.parseInt(max.getText()));
+
+                for(Part newPart: associatedParts){
+                    newProduct.addAssociatedPart(newPart);
+                }
+
+                Inventory.updateProduct(Inventory.getAllProducts().indexOf(selectedProduct), newProduct);
+
+                closeWindow();
+            }catch (Exception e){
+                new Alert(AlertType.ERROR, "One or more fields wrong Data Type.").showAndWait();
+            }
+        }
     }
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import javafx.fxml.FXMLLoader;
@@ -13,6 +9,9 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
+ * This class opens the Modify Product window
+ * FUTURE ENHANCEMENT make the modified start function
+ * common to modifyproduct and modifypart by use of a superclass
  */
 public class ModifyProduct extends FXMLWindow{
     
@@ -25,6 +24,14 @@ public class ModifyProduct extends FXMLWindow{
         start(PATH, TITLE, id);
     }
     
+    /**
+     * This function starts the modify product window
+     * 
+     * @param path path to the fxml file
+     * @param title title of the window
+     * @param id id of the product being modified
+     * @throws Exception if the fxml file cannot be found
+     */
     public void start(String path, String title, int id) throws Exception{
         FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(path));
         Parent root = fxmlloader.load();
@@ -33,7 +40,6 @@ public class ModifyProduct extends FXMLWindow{
         ModifyProductController controller = fxmlloader.<ModifyProductController>getController();
         controller.setId(id);
         
-        System.out.println("it gets this far at least");
         Scene rootScene = new Scene(root);
         Stage stage = new Stage();
         stage.setTitle(title);

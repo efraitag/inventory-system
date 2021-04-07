@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.*;
@@ -20,13 +16,29 @@ import javafx.stage.WindowEvent;
 /**
  *
  * @author Eden
+ * This class launches the main window.
+ * 
+ * FUTURE ENHANCEMENT add a menu for options and to inject data from file
  */
 public class Home extends Application{
     
+    /**
+     * 
+     * @param args launch arguments
+     * launches the program
+     */
     public static void main(String[] args){
         launch(args);
     }
     
+    /**
+     * 
+     * @param stage Stage to load the main program onto
+     * @throws Exception if the fxml file is not found
+     * 
+     * RUNTIME ERROR the entire program would not exit when the main
+     * window closed, so I set the onCloseRequest to Platform.exit()
+     */
     @Override
     public void start(Stage stage) throws Exception{
         
@@ -38,7 +50,7 @@ public class Home extends Application{
         
         Scene rootScene = new Scene(root);
         
-        //inject test data
+        //inject test data on press of F1
         rootScene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent event){

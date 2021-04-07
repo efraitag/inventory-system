@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.InHouse;
@@ -21,6 +17,7 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
+ * This class controls the Modfiy Part Window
  */
 public class ModifyPartController {
     
@@ -43,17 +40,22 @@ public class ModifyPartController {
     private Part selectedPart;
     private int selectedId;
     
-    @FXML
-    public void initialize(){
-        
-    }
-    
+    /**
+    *@param id The id of the Part being modified
+    * This method sets the local reference to the id
+    * of the part being modified and then calls
+    * setTextField to finish initializing values
+    */
     public void setId(int id){
         selectedId = id;
         selectedPart = Inventory.lookupPart(id);
         setTextFieldValues();
     }
     
+    /**
+    * This method sets the text field values to the values
+    * associated with the part being modified
+    */
     public void setTextFieldValues(){
         idField.setText(Integer.toString(selectedPart.getId()));
         nameField.setText(selectedPart.getName());
@@ -73,6 +75,10 @@ public class ModifyPartController {
         }            
     }
     
+    /**
+    * This method switches the last text field when
+    * the user togggles the InHouse and Outsourced radio buttons
+    */
     public void toggleContext(){
         if(this.inHouse.isSelected()){
             machineOrCompany.setText("Machine ID");
@@ -82,40 +88,90 @@ public class ModifyPartController {
         }
     }
     
-    public void save(){
+    /**
+    * checks if min<inv<max
+    *
+    */
+     public boolean errorCheck(){
+     
+        int minVal;
+        int invVal;
+        int maxVal;
+        
         
         try{
-            Part toSave;
-            
-            if(this.inHouse.isSelected()){
-                toSave = new InHouse(
-                        Integer.parseInt(idField.getText()),
-                        nameField.getText(),
-                        Double.parseDouble(priceField.getText()),
-                        Integer.parseInt(stockField.getText()),
-                        Integer.parseInt(minField.getText()),
-                        Integer.parseInt(maxField.getText()),
-                        Integer.parseInt(otherField.getText()));
-            }
-            else{              
-                toSave = new Outsourced(
-                        Integer.parseInt(idField.getText()),
-                        nameField.getText(),
-                        Double.parseDouble(priceField.getText()),
-                        Integer.parseInt(stockField.getText()),
-                        Integer.parseInt(minField.getText()),
-                        Integer.parseInt(maxField.getText()),
-                        otherField.getText());
-            }
-            
-            Inventory.updatePart(toSave);
-            closeWindow();
-            
-        } catch(Exception e){
-            new Alert(AlertType.ERROR, e.toString()).showAndWait();
+            minVal = Integer.parseInt(minField.getText());
+            invVal = Integer.parseInt(stockField.getText());
+            maxVal = Integer.parseInt(maxField.getText());
         }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
+            return true;
+        }
+        
+        if(minVal == 0 || maxVal == 0 || invVal == 0){
+            new Alert(AlertType.ERROR, "One or more inventory values zero.").showAndWait();
+            return true;
+        }
+        
+        if(!(minVal<maxVal)){
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
+            return true;
+        }
+        if(!(minVal<=invVal && invVal<=maxVal)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
+            return true;
+        }
+        
+        return false;
     }
     
+    /**
+    * This method saves the new values the user entered to the
+    * Part id in Inventory's part list
+    */
+    public void save(){
+        
+        boolean areErrors = errorCheck();
+        
+        if(!areErrors){
+            try{
+                Part toSave;
+
+                if(this.inHouse.isSelected()){
+                    toSave = new InHouse(
+                            Integer.parseInt(idField.getText()),
+                            nameField.getText(),
+                            Double.parseDouble(priceField.getText()),
+                            Integer.parseInt(stockField.getText()),
+                            Integer.parseInt(minField.getText()),
+                            Integer.parseInt(maxField.getText()),
+                            Integer.parseInt(otherField.getText()));
+                }
+                else{              
+                    toSave = new Outsourced(
+                            Integer.parseInt(idField.getText()),
+                            nameField.getText(),
+                            Double.parseDouble(priceField.getText()),
+                            Integer.parseInt(stockField.getText()),
+                            Integer.parseInt(minField.getText()),
+                            Integer.parseInt(maxField.getText()),
+                            otherField.getText());
+                }
+
+                Inventory.updatePart(selectedPart);
+                closeWindow();
+         }
+        //catches wrong types in the input fields
+        catch(Exception e){
+            new Alert(AlertType.ERROR, "One or more fields incorrect type.").showAndWait();
+        }
+      }
+    }
+    
+    /**
+     * Closes the ModifyPart Window
+     */
     public void closeWindow(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();

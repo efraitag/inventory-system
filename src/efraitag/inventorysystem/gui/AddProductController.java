@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import efraitag.inventorysystem.data.Inventory;
@@ -13,15 +9,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- *
  * @author Eden
+ * This class controls the AddProduct window
+ * FUTURE ENHANCEMENT make the main window disappear while this is active
  */
 public class AddProductController{
     
@@ -40,7 +39,9 @@ public class AddProductController{
     private TableViewSelectionModel associatedPartsTableSelectionModel;
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList(new ArrayList<Part>());
     
-    
+    /**
+     * initializes the Part tables
+     */
     @FXML
     public void initialize(){
         partsTable.setItems(Inventory.getAllParts());
@@ -69,42 +70,101 @@ public class AddProductController{
             //add to the table
             associatedParts.add(newAssociatedPart.get(0));
         }
+        //if the part selection is empty, display error.
+        else{
+            new Alert(AlertType.ERROR, "Selection is Empty.").showAndWait();
+        }
     }
     
     /**
      * Removes the selected associated part from the associated part list
      */
     public void removeAssociatedPart(){
-        ObservableList<Part> associatedPart = associatedPartsTableSelectionModel.getSelectedItems();
+        Part toDelete;
         
-        if(associatedPart.isEmpty()){
-            new Alert(Alert.AlertType.ERROR, "Please select an associated part to remove.").showAndWait();
+        try{
+            toDelete = (Part) associatedPartsTable.getSelectionModel().getSelectedItems().get(0);
+        } catch(IndexOutOfBoundsException e){
+            new Alert(AlertType.ERROR, "Please select a Part to disassociate").showAndWait();
+            return;
         }
-        else{
-           associatedParts.remove(associatedPart.get(0)); 
+        
+        if(toDelete != null){
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete " + toDelete.getName() + "?");
+            alert.showAndWait().ifPresent(response ->{
+                if(response == ButtonType.OK){
+                    associatedParts.remove(toDelete);
+                }
+            });
         }
     }
     
     /**
+     * This function checks whether min<inv<max
+     * @return true if it finds errors, false otherwise
+     */
+    public boolean errorCheck(){
+             
+        int minVal;
+        int invVal;
+        int maxVal;
+        
+        
+        try{
+            minVal = Integer.parseInt(min.getText());
+            invVal = Integer.parseInt(inv.getText());
+            maxVal = Integer.parseInt(max.getText());
+        }
+        catch (Exception e){
+            new Alert(AlertType.ERROR, "Inventory fields are not numbers.").showAndWait();
+            return true;
+        }
+        
+        if(minVal == 0 || maxVal == 0 || invVal == 0){
+            new Alert(AlertType.ERROR, "One or more inventory values zero.").showAndWait();
+            return true;
+        }
+        
+        if(!(minVal<=maxVal)){
+            new Alert(AlertType.ERROR, "Min must be less than max.").showAndWait();
+            return true;
+        }
+        if(!(minVal<=invVal && invVal<=maxVal)){
+            new Alert(AlertType.ERROR, "Inventory must be between min and max.").showAndWait();
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
      * saves new part and closes window
+     * id is auto generated based on the size of the product list in Inventory
      */
     public void save(){
         int id = Inventory.getAllProducts().size() + 1;
+        boolean areErrors = errorCheck();
         
-        Product newProduct = new Product(
-                        id,
-                        name.getText(),
-                        Double.parseDouble(price.getText()),
-                        Integer.parseInt(inv.getText()),
-                        Integer.parseInt(min.getText()),
-                        Integer.parseInt(max.getText()));
-        
-        for(Part associatedPart: associatedParts){
-            newProduct.addAssociatedPart(associatedPart);
+        if(!areErrors){
+            try{
+                Product newProduct = new Product(
+                                id,
+                                name.getText(),
+                                Double.parseDouble(price.getText()),
+                                Integer.parseInt(inv.getText()),
+                                Integer.parseInt(min.getText()),
+                                Integer.parseInt(max.getText()));
+
+                for(Part associatedPart: associatedParts){
+                    newProduct.addAssociatedPart(associatedPart);
+                }
+
+                Inventory.addProduct(newProduct);
+                closeWindow();
+            } catch (Exception e) {
+                new Alert(AlertType.ERROR, "One or more fields incorrect Data Type.").showAndWait();
+            }
         }
-        
-        Inventory.addProduct(newProduct);
-        closeWindow();
     }
     
     /**

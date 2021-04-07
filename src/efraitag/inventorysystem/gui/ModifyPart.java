@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package efraitag.inventorysystem.gui;
 
 import javafx.fxml.FXMLLoader;
@@ -13,6 +9,10 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
+ *
+ * This class loads the Modify Part Window
+ * FUTURE ENHANCEMENT create a child of FXMLWindow that has the modified
+ * start method used by ModifyPart and ModifyProduct
  */
 public class ModifyPart extends FXMLWindow{
     
@@ -26,7 +26,8 @@ public class ModifyPart extends FXMLWindow{
     }
     
     /**
-     * Overloads FXMLWindow.start
+     * Overloads FXMLWindow.start to allow for the passing of an int value
+     * to the controller
      * @param path the filepath to the fxml document
      * @param title the window title
      * @param id the id of the Part to grab initializing data from

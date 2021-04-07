@@ -4,8 +4,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.*;
 import java.util.ArrayList;
 /**
- * 
  * @author Eden
+ * This class describes a product, composed of one or multiple parts, associated with an id, name, price, stock, and min and max
+ *  
  */
 public class Product {
     private ObservableList<Part> associatedParts;
