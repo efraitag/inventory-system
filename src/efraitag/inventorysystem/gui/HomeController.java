@@ -17,7 +17,11 @@ import javafx.scene.control.TextField;
 
 /**
  * @author Eden
- * This class controls the main window of the application
+ */
+
+/**
+ * This class controls the main window of the application.
+ * 
  * FUTURE ENHANCEMENT move the static methods to Inventory or FXMLWindow
  */
 public class HomeController {
@@ -33,10 +37,7 @@ public class HomeController {
     private ObservableList productTableCols;
     private ObservableList observablePartList;
     
-    public void HomeController() {
-        observablePartList = Inventory.getAllParts();
-    }
-    
+
     /**
      * initializes the part and product tables
      */

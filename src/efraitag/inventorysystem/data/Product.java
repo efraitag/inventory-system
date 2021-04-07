@@ -5,9 +5,13 @@ import javafx.collections.*;
 import java.util.ArrayList;
 /**
  * @author Eden
- * This class describes a product, composed of one or multiple parts, associated with an id, name, price, stock, and min and max
- *  
- */
+ * 
+ */  
+
+ /**
+  * 
+  * This class describes a product, composed of one or multiple parts, associated with an id, name, price, stock, and min and max
+  */
 public class Product {
     private ObservableList<Part> associatedParts;
     private int id;
@@ -16,7 +20,16 @@ public class Product {
     private int stock;
     private int min;
     private int max;
-
+    
+    /**
+     * 
+     * @param id product id
+     * @param name product name
+     * @param price cost of the product
+     * @param stock amount on hand
+     * @param min min to have on hand
+     * @param max max to have on hand
+     */
     public Product(int id, String name, double price, int stock, int min, int max){
         this.id = id;
         this.name = name;

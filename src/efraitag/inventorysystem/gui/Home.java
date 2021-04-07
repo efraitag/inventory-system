@@ -16,6 +16,9 @@ import javafx.stage.WindowEvent;
 /**
  *
  * @author Eden
+ */
+
+/**
  * This class launches the main window.
  * 
  * FUTURE ENHANCEMENT add a menu for options and to inject data from file
@@ -26,6 +29,8 @@ public class Home extends Application{
      * 
      * @param args launch arguments
      * launches the program
+     * 
+     * JAVADOC located in InventorySystem/dist/javadoc/index.html
      */
     public static void main(String[] args){
         launch(args);

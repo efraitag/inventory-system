@@ -15,7 +15,11 @@ import javafx.stage.Stage;
 
 /**
  * @author Eden
- * This class controls the AddPart Window
+ */
+
+/**
+ * This class controls the AddPart Window.
+ * 
  * FUTURE ENHANCEMENT make the main window disappear when this opens
  */
 public class AddPartController {
@@ -53,8 +57,8 @@ public class AddPartController {
     }
     
     /**
-    * This function checks whether the min<inv<max
-    *
+    * This function checks whether the inv is between min and max
+    * @return boolean true if errors found
     */
     public boolean errorCheck(){
         

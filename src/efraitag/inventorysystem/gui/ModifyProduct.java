@@ -9,7 +9,11 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
- * This class opens the Modify Product window
+ */
+
+/**
+ * This class opens the Modify Product window.
+ * 
  * FUTURE ENHANCEMENT make the modified start function
  * common to modifyproduct and modifypart by use of a superclass
  */
@@ -19,6 +23,12 @@ public class ModifyProduct extends FXMLWindow{
     private final String TITLE = "Modify Product";
     private int id;
     
+    /**
+     * This starts the modify product window
+     * 
+     * @param id if of product to modify
+     * @throws Exception if fxml file not found
+     */
     public ModifyProduct(int id) throws Exception{
         this.id = id;
         start(PATH, TITLE, id);

@@ -17,7 +17,11 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
- * This class controls the Modify Product window
+ */
+
+/**
+ * This class controls the Modify Product window.
+ * 
  * FUTURE ENHANCEMENT share common functions with addProductController
  * by making them extend a common superclass
  */
@@ -41,10 +45,6 @@ public class ModifyProductController {
     private int id;
     private Product selectedProduct;
     
-    @FXML
-    public void initalize(){
-        
-    }
     
     /**
      * 
@@ -148,7 +148,8 @@ public class ModifyProductController {
     }
     
     /**
-    * checks if min<inv<max
+    * checks if inv between min and max
+    * @return boolean true if errors are found
     */
     public boolean errorCheck(){
      

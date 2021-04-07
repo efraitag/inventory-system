@@ -8,6 +8,9 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * @author Eden
+ */
+
+/**
  * This class acts as a superclass to all of the windows that can be
  * opened from the main window. It has a simple start method that just
  * opens and loads an FXML file.

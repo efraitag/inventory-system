@@ -7,6 +7,9 @@ import java.util.ArrayList;
 /**
  * 
  * @author Eden
+ */
+
+/**
  * This class keeps track of all parts and products in inventory, as well as
  * provides static functions to manipulate the Parts and Products lists.
  * 

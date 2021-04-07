@@ -17,7 +17,13 @@ import javafx.stage.Stage;
 /**
  *
  * @author Eden
- * This class controls the Modfiy Part Window
+ */
+
+/**
+ * This class controls the Modify Part Window.
+ * 
+ * FUTURE ENHANCEMENT make errorCheck a shared function between
+ * windows.
  */
 public class ModifyPartController {
     
@@ -89,7 +95,8 @@ public class ModifyPartController {
     }
     
     /**
-    * checks if min<inv<max
+    * checks if inv between min and max
+    * @return boolean true if errors are found
     *
     */
      public boolean errorCheck(){

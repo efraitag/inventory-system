@@ -19,7 +19,11 @@ import javafx.stage.Stage;
 
 /**
  * @author Eden
- * This class controls the AddProduct window
+ */
+
+/**
+ * This class controls the AddProduct window.
+ * 
  * FUTURE ENHANCEMENT make the main window disappear while this is active
  */
 public class AddProductController{
@@ -100,8 +104,8 @@ public class AddProductController{
     }
     
     /**
-     * This function checks whether min<inv<max
-     * @return true if it finds errors, false otherwise
+     * This function checks whether inv is between min and max
+     * @return boolean true if it finds errors, false otherwise
      */
     public boolean errorCheck(){
              
